@@ -1,0 +1,106 @@
+* {
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  border: none;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  background: url('bg.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+section, footer {
+  text-align: center;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+footer > * {
+  color: #000;
+  text-decoration: none;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid #222;
+  border-radius: 5px;
+  padding: 5% 1%;
+  margin: 1% auto;
+}
+
+#home > * {
+  width: 90%;
+  border-radius: 5px;
+  font-size: 2rem;
+  margin-bottom: 2%;
+}
+
+#home > label {
+  font-size: 1.2rem;
+  
+}
+
+.button {
+  font-size: 1.2rem;
+  padding: 2% 3%;
+  width: 50%;
+  background: #12abff;
+  color: #fff;
+  box-shadow: 5px 5px 8px #222;
+}
+
+.button:active {
+  box-shadow: 0px 0px 8px #222;
+}
+
+#result {
+  overflow-x: scroll;
+  align-items: flex-start;
+}
+
+table tr td {
+  border: 1px solid #555;
+  padding: 5px 8px;
+  border-radius: 5px;
+}
+
+table tr > td:first-child {
+  text-align: left;
+  border: 2px solid #555;
+  color: #000;
+}
+
+.A, .B, .C, .D {
+  color: #fff;
+}
+
+.A {
+  background: #f77;
+}
+.B {
+  background: #1af;
+}
+.C {
+  background: #fa1;
+}
+.D {
+  background: #77f;
+}
+
+.disabled {
+  background: #999;
+}
