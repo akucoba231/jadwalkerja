@@ -36,6 +36,7 @@ let fullday = [
   let refresh = 0;
 
 let inputTanggal = document.getElementById('tanggal');
+let jenis = document.getElementById('jenis');
 
 let cek = document.getElementById('generate');
 
@@ -61,11 +62,15 @@ cek.onclick = () => {
   let jangka = Math.floor((kapan.getTime() - skrg.getTime()) / (1000*60*60*24));
   let x = {};
   
-  if(jangka < 1){
+  if(jangka < 1 && jenis.value == "satu"){
   
     generate();
   }
-  else {
+  else if(jangka > 1 && jenis.value == "satu"){
+    generate();
+  }
+  else //if(jangka > 1 && jenis == "all") 
+  {
     
     for(let a = 0; a < ( jangka + 2); ++a)
     {
@@ -82,6 +87,7 @@ cek.onclick = () => {
     
     auto(x);
   }
+  
    // console.log("interval : " + jangka)
    // console.log("jangka : " + jangka)
   }
