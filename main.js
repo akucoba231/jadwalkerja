@@ -73,7 +73,11 @@ cek.onclick = () => {
   let skrg = new Date();
   let kapan = new Date(tmp);
   
-  let jangka = Math.floor((kapan.getTime() - skrg.getTime()) / (1000*60*60*24));
+  let selisih = kapan.getTime() - skrg.getTime();
+  let jangka = Math.floor(selisih / (1000*60*60*24));
+  
+  let balance = selisih % (1000*60*60*24);
+  
   let x = {};
   
   if(jangka < 1 && jenis.value == "satu"){
@@ -88,6 +92,8 @@ cek.onclick = () => {
     
     for(let a = 0; a < ( jangka + 2); ++a)
     {
+      
+      //let t = new Date(skrg.getTime() + (1000*60*60*24*(a)));
       let t = new Date(skrg.getTime() + (1000*60*60*24*(a)));
     
       let tmpMonth = t.getMonth()+1;
@@ -95,9 +101,17 @@ cek.onclick = () => {
       if(tmpMonth.length == 1){
         tmpMonth = `0${tmpMonth}`;
       }
-    
-      x[a] = `${t.getFullYear()}-${tmpMonth}-${t.getDate()}`;
+      
+      let tmpDate = t.getDate();
+      tmpDate = tmpDate.toString();
+      if(tmpDate.length == 1){
+        tmpDate = `0${tmpDate}`;
+        
+      }
+      x[a] = `${t.getFullYear()}-${tmpMonth}-${tmpDate}`;
     }
+    
+    //console.log(x)
     
     auto(x);
   }
@@ -214,12 +228,20 @@ function generate(){
   let value = inputTanggal.value;
   let d = new Date(value);
   
+  //console.log(d.getDate())
+  //console.log(d.getTime())
+  
   let tmpMonth = d.getMonth()+1;
   tmpMonth = tmpMonth.toString();
   if(tmpMonth.length == 1){
     tmpMonth = `0${tmpMonth}`;
   }
-  data['tanggal'] = d.getDate()+ '/' +tmpMonth+ '/' +d.getFullYear();
+  let tmpDate = d.getDate();
+  tmpDate = tmpDate.toString();
+  if(tmpDate.length == 1){
+    tmpDate = `0${tmpDate}`;
+  }
+  data['tanggal'] = tmpDate + '/' +tmpMonth+ '/' +d.getFullYear();
   
   data['hari'] = fullday[d.getDay()];
   
@@ -232,13 +254,20 @@ function generateX(date){
   //console.log(e.target.value)
   
   let d = new Date(date);
+  //console.log(d.getDate())
+  //console.log(d.getTime())
   
   let tmpMonth = d.getMonth()+1;
   tmpMonth = tmpMonth.toString();
   if(tmpMonth.length == 1){
     tmpMonth = `0${tmpMonth}`;
   }
-  data['tanggal'] = d.getDate()+ '/' +tmpMonth+ '/' +d.getFullYear();
+  let tmpDate = d.getDate();
+  tmpDate = tmpDate.toString();
+  if(tmpDate.length == 1){
+    tmpDate = `0${tmpDate}`;
+  }
+  data['tanggal'] = tmpDate + '/' +tmpMonth+ '/' +d.getFullYear();
   
   data['hari'] = fullday[d.getDay()];
   
