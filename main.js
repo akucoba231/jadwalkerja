@@ -36,6 +36,7 @@ let fullday = [
   //let refresh = 0;
 
 let backup = {}
+let libur;
 
 for(let el in element){
   backup[el] = element[el].innerHTML;
@@ -44,7 +45,13 @@ for(let el in element){
 let inputTanggal = document.getElementById('tanggal');
 let jenis = document.getElementById('jenis');
 
+let hariLibur = document.getElementById('hariLibur');
 let cek = document.getElementById('generate');
+
+cek.setAttribute('disabled','disabled');
+
+cek.classList.add('disabled');
+cek.textContent = "Memuat data libur..."
 
 inputTanggal.valueAsDate = new Date();
 
@@ -107,12 +114,12 @@ cek.onclick = () => {
 function auto(x){
   //console.log(Object.keys(x).length);
   
-    console.log(x);
+    //console.log(x);
    
     let b = 0;
     let i = setInterval(function() {
       generateX(x[b]);
-      console.log(b)
+      //console.log(b)
       ++b;
       if(b >= (Object.keys(x).length)){
         clearInterval(i);
@@ -159,23 +166,60 @@ function update(){
     if(el == "libur"){
       tmp.removeAttribute('class');
     }
+    if(el == "tanggal"){
+      let tmpTanggal = ubahTanggal(data[el]);
+      let tmpCek = cekLibur(tmpTanggal);
+      
+      //console.log(tmpTanggal);
+      //console.log(tmpCek);
+      if(tmpCek == "false"){
+        //do nothing
+      }
+      else {
+        //console.log(tmpCek);
+        tambahLibur([data[el],tmpCek[1]]);;
+        tmp.classList.add('liburan');
+      }
+    }
     element[el].appendChild(tmp);
   }
   
   
 }
 
+function cekLibur(tgl){
+  let hasil = [];
+  for(let l = 0; l < libur.length; ++l){
+    if(tgl === libur[l]['date']){
+      hasil = ['true', libur[l]['name']];
+    }
+  }
+  
+  if(hasil.length > 1){
+    return hasil;
+  }
+  else {
+    return 'false';
+  }
+}
+
 function reset(){
    for(let el in element){
     element[el].innerHTML = backup[el];
    }
+   hariLibur.innerHTML = "";
 }
 function generate(){
   //console.log(e.target.value)
   let value = inputTanggal.value;
   let d = new Date(value);
   
-  data['tanggal'] = d.getDate()+ '/' +(d.getMonth()+1)+ '/' +d.getFullYear();
+  let tmpMonth = d.getMonth()+1;
+  tmpMonth = tmpMonth.toString();
+  if(tmpMonth.length == 1){
+    tmpMonth = `0${tmpMonth}`;
+  }
+  data['tanggal'] = d.getDate()+ '/' +tmpMonth+ '/' +d.getFullYear();
   
   data['hari'] = fullday[d.getDay()];
   
@@ -189,7 +233,12 @@ function generateX(date){
   
   let d = new Date(date);
   
-  data['tanggal'] = d.getDate()+ '/' +(d.getMonth()+1)+ '/' +d.getFullYear();
+  let tmpMonth = d.getMonth()+1;
+  tmpMonth = tmpMonth.toString();
+  if(tmpMonth.length == 1){
+    tmpMonth = `0${tmpMonth}`;
+  }
+  data['tanggal'] = d.getDate()+ '/' +tmpMonth+ '/' +d.getFullYear();
   
   data['hari'] = fullday[d.getDay()];
   
@@ -199,4 +248,39 @@ function generateX(date){
   //hanya karena bulannya tidak memiliki 0 di depan jadi beda hasilnya
   cekRegu(tmp);
   update();
+}
+
+function getLibur(){
+  fetch('https://libur.deno.dev/api')
+  .then((res)=>res.json())
+  .then((data)=>{
+    console.log(data);
+    libur = data;
+    cek.removeAttribute('disabled');
+    cek.classList.remove('disabled');
+    cek.textContent = "Cek Jadwal";
+  })
+  .catch((e)=>{
+    console.log(e.toString());
+  })
+}
+
+getLibur();
+
+function ubahTanggal(tgl){
+  tgl = tgl.split('/');
+  tgl = `${tgl[2]}-${tgl[1]}-${tgl[0]}`;
+  
+  return tgl;
+}
+
+function tambahLibur([tg, ket]){
+  let tmp = document.createElement('p');
+  
+  //tmp.setAttribute('class','liburan');
+  tmp.textContent = tg + " : " + ket;
+  
+  //console.log(name)
+  //console.log(tmp.textContent)
+  hariLibur.appendChild(tmp);
 }
