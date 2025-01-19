@@ -33,7 +33,13 @@ let fullday = [
     'Jumat',
     'Sabtu',
   ]
-  let refresh = 0;
+  //let refresh = 0;
+
+let backup = {}
+
+for(let el in element){
+  backup[el] = element[el].innerHTML;
+}
 
 let inputTanggal = document.getElementById('tanggal');
 let jenis = document.getElementById('jenis');
@@ -48,12 +54,13 @@ inputTanggal.onchange = (e) => {
 }
 
 cek.onclick = () => {
-  if(refresh == 0){
+ // if(refresh == 0){
   //cek.setAttribute('disabled','');
-  cek.classList.add('disabled');
-  cek.textContent = 'Muat Ulang Halaman';
+ // cek.classList.add('disabled');
+ // cek.textContent = 'Muat Ulang Halaman';
   
-  refresh = 1;
+ // refresh = 1;
+  reset();
   
   let tmp = inputTanggal.value;
   let skrg = new Date();
@@ -90,11 +97,11 @@ cek.onclick = () => {
   
    // console.log("interval : " + jangka)
    // console.log("jangka : " + jangka)
-  }
-  else {
+ // }
+ /* else {
     return confirm('Halaman akan dimuat ulang, lanjutkan ?') ? 
     window.location.reload() : "";
-  }
+  } */
 }
 
 function auto(x){
@@ -158,6 +165,11 @@ function update(){
   
 }
 
+function reset(){
+   for(let el in element){
+    element[el].innerHTML = backup[el];
+   }
+}
 function generate(){
   //console.log(e.target.value)
   let value = inputTanggal.value;
