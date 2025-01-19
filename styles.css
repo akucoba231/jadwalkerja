@@ -70,8 +70,16 @@ section {
 }
 
 #result {
-  overflow-x: scroll;
+  overflow-x: hidden;
   align-items: flex-start;
+  position: relative;
+}
+
+.wrapper {
+  width: 99%;
+  margin: 2% auto;
+  overflow-x: scroll;
+  margin: 3% auto;
 }
 
 table tr td {
@@ -105,4 +113,33 @@ table tr > td:first-child {
 
 .disabled {
   background: #999;
+}
+
+#hariLibur {
+  position: relative;
+  /*
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 90%;
+  */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-size: 0.7rem;
+  font-style: italic;
+  font-weight: bold;
+  color: #fb3321;
+  height: 20%;
+  text-align: left;
+  padding: 0 3%;
+  overflow-y: scroll;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.liburan {
+  color: #fb3321;
+  font-weight: bold;
 }
