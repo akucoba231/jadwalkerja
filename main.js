@@ -53,7 +53,19 @@ cek.setAttribute('disabled','disabled');
 cek.classList.add('disabled');
 cek.textContent = "Memuat data libur..."
 
-inputTanggal.valueAsDate = new Date();
+// Membuat tanggal lokal
+let today = new Date();
+
+// Mengambil nilai tahun, bulan, dan tanggal dari objek Date
+let year = today.getFullYear();
+let month = ('0' + (today.getMonth() + 1)).slice(-2);  // Menambahkan leading zero
+let day = ('0' + today.getDate()).slice(-2);  // Menambahkan leading zero
+
+// Membuat string tanggal dalam format YYYY-MM-DD
+let formattedDate = `${year}-${month}-${day}`;
+
+// Menetapkan nilai default input
+inputTanggal.value = formattedDate;
 
 inputTanggal.onchange = (e) => {
   //generate();
